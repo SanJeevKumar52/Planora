@@ -1,5 +1,7 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ThemeProvider from "./theme";
 import LoginPage from './pages/auth/login';
 import RegisterPage from './pages/auth/register';
@@ -13,18 +15,22 @@ function App() {
 
 
   return (
+    <>
+      < ThemeProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<PublicLayout><LoginPage /></PublicLayout>} />
+            <Route path="/register" element={<PublicLayout><RegisterPage /></PublicLayout>} />
+            <Route path="/" element={<PrivateLayout><HomePage /></PrivateLayout>} />
+            <Route path="/profile" element={<PrivateLayout><ProfilePage /></PrivateLayout>} />
+          </Routes>
+        </BrowserRouter>
 
-    < ThemeProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<PublicLayout><LoginPage /></PublicLayout>} />
-          <Route path="/register" element={<PublicLayout><RegisterPage /></PublicLayout>} />
-          <Route path="/" element={<PrivateLayout><HomePage /></PrivateLayout>} />
-          <Route path="/profile" element={<PrivateLayout><ProfilePage /></PrivateLayout>} />
-        </Routes>
-      </BrowserRouter>
+      </ThemeProvider>
+      <ToastContainer />
 
-    </ThemeProvider>
+    </>
+
 
   )
 }

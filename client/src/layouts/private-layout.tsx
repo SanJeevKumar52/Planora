@@ -1,20 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
+import Sidebar from "./sidebar";
+import { getCurrentUser } from "../api-services/users-service";
+import { message } from "antd";
 
 
 function PrivateLayout({ children }: { children: React.ReactNode }) {
+    const[user,setUser] = useState(null);
     const navigate = useNavigate();
+    const [showContent, setShowContent] = useState(false)
 
+    const getData = async () => {
+        try {
+            const response = await getCurrentUser();
+            setUser(response.data);
+        } catch (error:any) {
+            message.error(error.response?.data?.message || "Failed to fetch user data");
+        }
+    }
     useEffect(() => {
         const token = Cookies.get("token");
         if (!token) {
             navigate("/login");
         }
+        else {
+            getData();
+            setShowContent(true);
+        }
     }, []);
     return (
-        <div>{children}</div>
+        showContent && user && <div className="flex gap-5 h-screen">
+            <Sidebar user={user} />
+            <div className="flex-1">
+                {children}
+            </div>
+        </div>
     )
 }
+
 
 export default PrivateLayout 
