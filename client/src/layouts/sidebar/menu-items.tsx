@@ -108,7 +108,7 @@ const onLogout = () => {
     <div className="lg:bg-gray-200 h-full p-5 w-full">
       <div className="flex flex-col gap-1 mt-5">
         <h1 className="text-2xl font-bold text-info">
-          Sam
+          SAM
           <b className="text-primary font-bold pl-2">EVENTS</b>
         </h1>
         <span className="text-sm text-gray-600">{currentUser?.name}</span>
