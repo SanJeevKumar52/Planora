@@ -1,25 +1,16 @@
-import { message } from "antd";
-import { getCurrentUser } from "../../../api-services/users-service";
-import { useEffect, useState } from "react";
+import type { UsersStoreType } from "../../../store/users-store";
+import usersGlobalStore from "../../../store/users-store";
 
 function HomePage() {
-    const [user, setUser] = useState(null);
-
-    const getData = async () => {
-        try {
-            const response = await getCurrentUser();
-            setUser(response.data);
-        } catch (error: any) {
-            message.error(error?.response?.data?.message || error.message || "Failed to fetch user data");
-        }
-    };
-
-    useEffect(() => {
-        getData();
-    }, []);
+    const { currentUser }: UsersStoreType = usersGlobalStore() as UsersStoreType;
 
     return (
-        <div>HomePage</div>
+        <div>
+            <h1>HomePage</h1>
+            <p>Welcome, {currentUser?.name || "Guest"}!</p>
+
+
+        </div>
     );
 }
 

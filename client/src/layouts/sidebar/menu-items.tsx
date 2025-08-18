@@ -8,18 +8,22 @@ import {
   User,
   UsersRound,
 } from "lucide-react";
-import type { UserType } from "../../interfaces";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+
 import { toast } from 'react-toastify';
+import type { UsersStoreType } from "../../store/users-store";
+import usersGlobalStore from "../../store/users-store";
 
 
-function MenuItems({ user }: { user: UserType }) {
+function MenuItems() {
 
   const iconSize = 16;
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname;
+  const {currentUser}:UsersStoreType =usersGlobalStore() as UsersStoreType;
 
   const userMenu = [
     {
@@ -90,14 +94,14 @@ function MenuItems({ user }: { user: UserType }) {
     },
   ];
 
-  const menuToRender = user?.isAdmin ? adminMenu : userMenu;
+  const menuToRender = currentUser?.isAdmin ? adminMenu : userMenu;
 
-
-  const onLogout = () => {
-    Cookies.remove("token");
-    toast.success("You have been logged out successfully!");
-    navigate("/login");
-  };
+ 
+const onLogout = () => {
+  Cookies.remove("token");
+  toast.success("You have been logged out successfully!");
+  navigate("/login");
+};
 
 
   return (
@@ -107,7 +111,7 @@ function MenuItems({ user }: { user: UserType }) {
           Sam
           <b className="text-primary font-bold pl-2">EVENTS</b>
         </h1>
-        <span className="text-sm text-gray-600">{user.name}</span>
+        <span className="text-sm text-gray-600">{currentUser?.name}</span>
       </div>
 
       <div className="flex flex-col gap-10 mt-20">

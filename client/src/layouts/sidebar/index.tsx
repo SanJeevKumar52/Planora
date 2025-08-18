@@ -1,9 +1,9 @@
-import type { UserType } from "../../interfaces"
+
 import MenuItems from "./menu-items"
 
-function Sidebar({ user }: { user: UserType }) {
+function Sidebar() {
     return (
-        <div className="w-60 h-full"><MenuItems user={user}/></div>
+        <div className="w-60 h-full"><MenuItems/></div>
     )
 }
 
